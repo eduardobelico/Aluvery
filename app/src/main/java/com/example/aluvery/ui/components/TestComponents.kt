@@ -158,3 +158,72 @@ fun MyFirstComposablePreview(){
         }
     }
 }
+
+//desafio
+//
+//@Preview(showBackground = true)
+//@Composable
+//fun ProdTwo() {
+//    Surface(
+//        Modifier.padding(8.dp),
+//        shape = RoundedCornerShape(15.dp),
+//        shadowElevation = 4.dp
+//    ) {
+//        Row(
+//            Modifier
+//                .height(200.dp)
+//                .widthIn(400.dp)
+//        ) {
+//            val imageSize = 100.dp
+//            Box(
+//                modifier = Modifier
+//                    .fillMaxHeight()
+//                    .width(imageSize)
+//                    .background(
+//                        brush = Brush.verticalGradient(
+//                            colors = listOf(
+//                                Purple500, Pink40
+//                            )
+//                        )
+//                    )
+//
+//            ) {
+//                Image(
+//                    painter = painterResource(id = R.drawable.ic_launcher_background),
+//                    contentDescription = "Imagem do produto",
+//                    Modifier
+//                        .size(imageSize)
+//                        .offset(x = imageSize / 2)
+//                        .clip(shape = CircleShape)
+//                        .align(CenterEnd)
+//                        .border(
+//                            BorderStroke(
+//                                2.dp, brush = Brush.verticalGradient(
+//                                    listOf(
+//                                        Pink40, Purple500
+//                                    )
+//                                )
+//                            ), CircleShape
+//                        )
+//                )
+//            }
+//            Spacer(modifier = Modifier.width(imageSize / 2))
+//            Box(
+//                Modifier
+//                    .padding(16.dp)
+//                    .fillMaxHeight()
+//                    .padding(16.dp)
+//            ) {
+//                Column {
+//                    Text(
+//                        text = LoremIpsum(50).values.first(),
+//                        fontSize = 18.sp,
+//                        maxLines = 6,
+//                        overflow = TextOverflow.Ellipsis
+//                    )
+//                }
+//            }
+//        }
+//    }
+//}
+
