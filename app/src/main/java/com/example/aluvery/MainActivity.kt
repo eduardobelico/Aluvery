@@ -28,6 +28,7 @@ import androidx.compose.ui.Alignment.Companion.BottomCenter
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -35,9 +36,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.aluvery.extensions.toBrazilianCurrency
+import com.example.aluvery.model.Product
 import com.example.aluvery.ui.theme.AluveryTheme
 import com.example.aluvery.ui.theme.Purple500
 import com.example.aluvery.ui.theme.Teal200
+import java.math.BigDecimal
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,7 +58,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun ProductItem() {
+fun ProductItem(product: Product) {
     Surface(
         shape = RoundedCornerShape(15.dp),
         shadowElevation = 4.dp
@@ -78,13 +82,14 @@ fun ProductItem() {
                     )
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.ic_launcher_background),
+                    painter = painterResource(product.image),
                     contentDescription = "Imagem do produto",
                     Modifier
                         .size(imageSize)
                         .offset(y = imageSize / 2)
                         .clip(shape = CircleShape)
-                        .align(BottomCenter)
+                        .align(BottomCenter),
+                    contentScale = ContentScale.Crop
                 )
             }
             Spacer(modifier = Modifier.height(imageSize / 2))
@@ -92,14 +97,14 @@ fun ProductItem() {
                 Modifier.padding(16.dp)
             ) {
                 Text(
-                    text = LoremIpsum(50).values.first(),
+                    text = product.name,
                     fontSize = 18.sp,
                     fontWeight = FontWeight(700),
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis
                 )
                 Text(
-                    text = "R$ 14,99",
+                    text = product.price.toBrazilianCurrency(),
                     Modifier.padding(top = 8.dp),
                     fontSize = 14.sp,
                     fontWeight = FontWeight(400)
@@ -129,9 +134,22 @@ fun ProductSection() {
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Spacer(modifier = Modifier)
-            ProductItem()
-            ProductItem()
-            ProductItem()
+            ProductItem(
+                Product(name = "Hambúrger",
+                    price = BigDecimal("12.99"),
+                    image = R.drawable.burger
+                )
+            )
+            ProductItem(
+                Product(name = "Batata Frita",
+                price = BigDecimal("7.99"),
+                image = R.drawable.fries)
+            )
+            ProductItem(
+                Product(name = "Pizza",
+                    price = BigDecimal("19.99"),
+                    image = R.drawable.pizza)
+            )
             Spacer(modifier = Modifier)
         }
     }
@@ -141,7 +159,13 @@ fun ProductSection() {
 @Preview(showBackground = true)
 @Composable
 private fun ProductItemPreview() {
-    ProductItem()
+    ProductItem(
+        Product(
+            name = LoremIpsum(50).values.first(),
+            price = BigDecimal("14.99"),
+            image = R.drawable.ic_launcher_background
+        )
+    )
 }
 
 @Preview(showBackground = true)
