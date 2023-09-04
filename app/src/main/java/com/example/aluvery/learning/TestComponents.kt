@@ -1,4 +1,4 @@
-package com.example.aluvery.ui.components
+package com.example.aluvery.learning
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
