@@ -12,3 +12,5 @@ val Pink40 = Color(0xFFC382CE)
 
 val Purple500 = Color(0xFF6200EE)
 val Teal200 = Color(0xFF009688)
+
+val White = Color(0xFFFFFFFF)
