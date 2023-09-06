@@ -6,18 +6,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -31,44 +24,33 @@ import com.example.aluvery.sampledata.sampleProducts
 import com.example.aluvery.sampledata.sampleSections
 import com.example.aluvery.ui.components.CardProductItem
 import com.example.aluvery.ui.components.ProductSection
+import com.example.aluvery.ui.components.SearchTextField
 import com.example.aluvery.ui.theme.AluveryTheme
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     sections: Map<String, List<Product>>,
     searchText: String = ""
 ) {
     Column {
-        var text by remember { mutableStateOf(searchText) }
+        var text by remember {
+            mutableStateOf(searchText)
+        }
+        SearchTextField(
+            searchText = text,
+            onSearchChange = {
+                text = it
+            }
+        )
         val searchedProducts = remember(text) {
-            if (text.isNotBlank()){
+            if (text.isNotBlank()) {
                 sampleProducts.filter { product ->
                     product.name.contains(text, ignoreCase = true) ||
                             product.description?.contains(text, ignoreCase = true) ?: false
                 }
             } else emptyList()
         }
-        OutlinedTextField(
-            value = text,
-            onValueChange = { newValue ->
-                text = newValue
-            },
-            Modifier
-                .padding(16.dp)
-                .fillMaxWidth(),
-            shape = RoundedCornerShape(100),
-            leadingIcon = {
-                Icon(Icons.Default.Search, contentDescription = "ícone de lupa")
-            },
-            label = {
-                Text(text = "Produto")
-            },
-            placeholder = {
-                Text(text = "O que você procura?")
-            }
-        )
         LazyColumn(
             Modifier
                 .fillMaxSize(),
