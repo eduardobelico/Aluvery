@@ -19,7 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.aluvery.dao.ProductDao
 import com.example.aluvery.sampledata.sampleSections
 import com.example.aluvery.ui.screens.HomeScreen
-import com.example.aluvery.ui.screens.HomeScreenUiState
+import com.example.aluvery.ui.state.HomeScreenUiState
 import com.example.aluvery.ui.theme.AluveryTheme
 
 class MainActivity : ComponentActivity() {
