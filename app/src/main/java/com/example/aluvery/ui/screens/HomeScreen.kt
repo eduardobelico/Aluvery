@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -27,37 +28,54 @@ import com.example.aluvery.ui.components.ProductSection
 import com.example.aluvery.ui.components.SearchTextField
 import com.example.aluvery.ui.theme.AluveryTheme
 
-
-@Composable
-fun HomeScreen(
-    sections: Map<String, List<Product>>,
-    searchText: String = ""
-) {
-    Column {
-        var text by remember {
-            mutableStateOf(searchText)
-        }
-        SearchTextField(
-            searchText = text,
-            onSearchChange = {
-                text = it
-            }
-        )
-        val searchedProducts = remember(text) {
+class HomeScreenUiState(searchText: String = "") {
+    
+    var text by mutableStateOf(searchText)
+    private set
+    
+    val searchedProducts
+        get() =
             if (text.isNotBlank()) {
                 sampleProducts.filter { product ->
                     product.name.contains(text, ignoreCase = true) ||
                             product.description?.contains(text, ignoreCase = true) ?: false
                 }
             } else emptyList()
+    
+    fun isShownSections(): Boolean {
+        return text.isBlank()
+    }
+    
+    val onSearchChange: (String) -> Unit = { searchText ->
+        text = searchText
+    }
+}
+
+@Composable
+fun HomeScreen(
+    sections: Map<String, List<Product>>,
+    state: HomeScreenUiState = HomeScreenUiState()
+) {
+    Column {
+        val text = state.text
+        val searchedProducts = remember(text) {
+            state.searchedProducts
         }
+        SearchTextField(
+            searchText = text,
+            onSearchChange = state.onSearchChange,
+            Modifier
+                .padding(16.dp)
+                .fillMaxWidth()
+        )
+        
         LazyColumn(
             Modifier
                 .fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(16.dp),
             contentPadding = PaddingValues(bottom = 16.dp)
         ) {
-            if (text.isBlank()) {
+            if (state.isShownSections()) {
                 for (section in sections) {
                     val title = section.key
                     val products = section.value
@@ -95,7 +113,7 @@ fun HomeScreenPreview() {
 fun HomeScreenWithSearchTextPreview() {
     AluveryTheme {
         Surface {
-            HomeScreen(sampleSections, searchText = "pizza")
+            HomeScreen(sampleSections, state = HomeScreenUiState("a"))
         }
     }
 }

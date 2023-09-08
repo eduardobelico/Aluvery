@@ -17,7 +17,8 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun SearchTextField(
     searchText: String,
-    onSearchChange: (String) -> Unit
+    onSearchChange: (String) -> Unit,
+    fillMaxWidth: Modifier
 ) {
     OutlinedTextField(
         value = searchText,
