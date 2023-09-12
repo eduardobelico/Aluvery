@@ -17,7 +17,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.aluvery.dao.ProductDao
 import com.example.aluvery.sampledata.sampleSections
 import com.example.aluvery.ui.screens.HomeScreen
 import com.example.aluvery.ui.states.HomeScreenUiState
