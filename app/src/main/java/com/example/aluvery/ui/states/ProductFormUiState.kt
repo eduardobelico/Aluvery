@@ -1,4 +1,4 @@
-package com.example.aluvery.ui.state
+package com.example.aluvery.ui.states
 
 class ProductFormUiState(
     val url: String = "",

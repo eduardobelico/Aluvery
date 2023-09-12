@@ -20,13 +20,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.aluvery.dao.ProductDao
 import com.example.aluvery.sampledata.sampleSections
 import com.example.aluvery.ui.screens.HomeScreen
-import com.example.aluvery.ui.state.HomeScreenUiState
+import com.example.aluvery.ui.states.HomeScreenUiState
 import com.example.aluvery.ui.theme.AluveryTheme
 import com.example.aluvery.ui.viewmodels.HomeScreenViewModel
 
 class MainActivity : ComponentActivity() {
-    
-    private val dao = ProductDao()
     
     override fun onCreate(savedInstanceState: Bundle?) {
         
@@ -40,9 +38,8 @@ class MainActivity : ComponentActivity() {
                     )
                 )
             }) {
-                val products = dao.products()
                 val viewModel by viewModels<HomeScreenViewModel>()
-                HomeScreen(viewModel, products = products)
+                HomeScreen(viewModel)
             }
         }
     }
