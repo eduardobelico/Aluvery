@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -21,6 +22,7 @@ import com.example.aluvery.sampledata.sampleSections
 import com.example.aluvery.ui.screens.HomeScreen
 import com.example.aluvery.ui.state.HomeScreenUiState
 import com.example.aluvery.ui.theme.AluveryTheme
+import com.example.aluvery.ui.viewmodels.HomeScreenViewModel
 
 class MainActivity : ComponentActivity() {
     
@@ -39,7 +41,8 @@ class MainActivity : ComponentActivity() {
                 )
             }) {
                 val products = dao.products()
-                HomeScreen(products = products)
+                val viewModel by viewModels<HomeScreenViewModel>()
+                HomeScreen(viewModel, products = products)
             }
         }
     }

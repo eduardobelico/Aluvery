@@ -1,6 +1,7 @@
 package com.example.aluvery.ui.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -12,6 +13,10 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -29,12 +34,19 @@ import java.math.BigDecimal
 @Composable
 fun CardProductItem(
     product: Product,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    isExpanded: Boolean = false
 ) {
+    var expanded by rememberSaveable {
+        mutableStateOf(isExpanded)
+    }
     Card(
         modifier
             .fillMaxWidth()
-            .heightIn(150.dp),
+            .heightIn(150.dp)
+            .clickable {
+                expanded = !expanded
+            },
         shape = AbsoluteCutCornerShape(0.dp),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 4.dp
@@ -63,12 +75,14 @@ fun CardProductItem(
                     text = product.price.toBrazilianCurrency()
                 )
             }
-            product.description?.let {
-                Text(
-                    text = product.description,
-                    Modifier
-                        .padding(16.dp)
-                )
+            if (expanded) {
+                product.description?.let {
+                    Text(
+                        text = product.description,
+                        Modifier
+                            .padding(16.dp)
+                    )
+                }
             }
         }
     }
@@ -100,6 +114,7 @@ private fun CardProductItemWithDescritionPreview() {
                     price = BigDecimal("19.99"),
                     description = LoremIpsum(50).values.first()
                 ),
+                isExpanded = true
             )
         }
     }
